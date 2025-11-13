@@ -16,5 +16,5 @@ helm upgrade -i cert-manager jetstack/cert-manager \
 helm install rancher rancher-prime/rancher \
   --namespace cattle-system \
   --set hostname=rancher.cam.lab \
-  --set bootstrapPassword=P@ssw0rd \
+  --set bootstrapPassword=!%motpasse?? \
   --set replicas=3
