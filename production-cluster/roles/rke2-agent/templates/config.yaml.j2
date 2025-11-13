@@ -1,0 +1,8 @@
+write-kubeconfig-mode: "0644"
+node-name: "{{ inventory_hostname }}"
+server: "https://{{ hostvars['gcam-prod-master1'].ansible_host }}:9345"
+token: "{{ token }}"
+tls-san:
+{% for san in tls_sans %}
+  - {{ san }}
+{% endfor %}

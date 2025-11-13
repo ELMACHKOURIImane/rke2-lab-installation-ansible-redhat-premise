@@ -1,0 +1,7 @@
+tls_sans:
+  - "gcam-prod-master1.cam.lab"
+  - "gcam-prod-master2.cam.lab"
+  - "gcam-prod-master3.cam.lab"
+  - "gcam-prod-worker1.cam.lab"
+  - "gcam-prod-worker2.cam.lab"
+

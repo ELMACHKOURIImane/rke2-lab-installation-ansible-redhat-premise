@@ -1,0 +1,17 @@
+---
+
+- hosts: all
+  become: true
+  roles:
+    - common
+
+- hosts: master
+  become: true
+  roles:
+    - rke2-server
+
+- hosts: master-join
+  become: true
+  roles:
+    - rke2-server-join
+

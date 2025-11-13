@@ -1,0 +1,47 @@
+---
+# === 1. Désactiver le pare-feu firewalld ===
+- name: Désactiver firewalld (pare-feu par défaut sur Red Hat)
+  systemd:
+    name: firewalld
+    state: stopped
+    enabled: false
+  ignore_errors: true
+
+# === 2. Mise à jour du système ===
+- name: Mettre à jour tous les paquets
+  yum:
+    name: "*"
+    state: latest
+
+# Installer EPEL pour RHEL/CentOS 9
+- name: Installer epel-release via URL pour RHEL/CentOS 9
+  command: dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+
+- name: Installer les dépendances nécessaires
+  yum:
+    name:
+      - curl
+      - tar
+      - socat
+      - conntrack-tools
+      - iptables
+      - ca-certificates
+      - nfs-utils
+    state: present
+
+# === 3. Désactiver le swap (nécessaire pour Kubernetes) ===
+- name: Désactiver le swap immédiatement
+  command: swapoff -a
+  ignore_errors: true
+
+- name: Désactiver le swap au redémarrage
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*\s+swap\s+.*)$'
+    replace: '# \1'
+  ignore_errors: true
+
+# === 4. Nettoyage ===
+- name: Nettoyer les paquets inutiles
+  yum:
+    autoremove: yes

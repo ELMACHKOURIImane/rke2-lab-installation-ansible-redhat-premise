@@ -1,0 +1,28 @@
+---
+- name: Créer dossier de config
+  file:
+    path: /etc/rancher/rke2
+    state: directory
+
+- name: Générer le fichier config
+  template:
+    src: config.yaml.j2
+    dest: /etc/rancher/rke2/config.yaml
+
+- name: Installer RKE2 server
+  shell: curl -sfL https://get.rke2.io | INSTALL_RKE2_TYPE=server sh -
+
+- name: Démarrer le service RKE2
+  systemd:
+    name: rke2-server
+    state: started
+    enabled: true
+
+- name: Ajouter kubectl
+  shell: |
+    ln -sf $(find /var/lib/rancher/rke2/data/ -name kubectl | head -n 1) /usr/bin/kubectl
+    mkdir -p ~/.kube
+    ln -sf /etc/rancher/rke2/rke2.yaml ~/.kube/config
+  args:
+    executable: /bin/bash
+

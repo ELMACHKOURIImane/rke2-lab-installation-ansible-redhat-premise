@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  tasks:
+    - name: uninstall rke2
+      shell: |
+        rke2-killall.sh
+        rke2-uninstall.sh
+
