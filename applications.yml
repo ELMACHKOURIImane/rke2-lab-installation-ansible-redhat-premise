@@ -18,3 +18,20 @@ helm install rancher rancher-prime/rancher \
   --set hostname=rancher.cam.lab \
   --set bootstrapPassword=!%motpasse?? \
   --set replicas=3
+
+
+#Longhorn
+
+helm repo add longhorn https://charts.longhorn.io
+helm repo update
+helm upgrade -i longhorn longhorn/longhorn --namespace longhorn-system --create-namespace
+
+#ArgoCD
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+
+
+
+
+
+  
