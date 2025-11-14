@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: argocd-cert
+  namespace: argocd
+spec:
+  secretName: argocd-tls-imane
+  issuerRef:
+    name: selfsigned-cluster-issuer
+    kind: ClusterIssuer
+  privateKey:
+    rotationPolicy: Always
+  dnsNames:
+    - argocd.cam.lab
