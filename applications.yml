@@ -30,8 +30,15 @@ helm upgrade -i longhorn longhorn/longhorn --namespace longhorn-system --create-
 kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 
+# Velero 
+
+curl -LO https://github.com/vmware-tanzu/velero/releases/download/v1.17.1/velero-v1.17.1-linux-amd64.tar.gz
+tar -xvf velero-v1.17.1-linux-amd64.tar.gz
 
 
-
+sudo mv velero-v1.17.1-linux-amd64/velero /usr/local/bin/
+export PATH=$PATH:/usr/local/bin
+echo 'export PATH=$PATH:/usr/local/bin' >> /root/.bashrc
+source /root/.bashrc
 
   
