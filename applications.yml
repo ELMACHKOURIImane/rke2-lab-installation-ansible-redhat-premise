@@ -1,3 +1,8 @@
+# Taint masters 
+
+kubectl taint nodes master1 node-role.kubernetes.io/master=true:NoSchedule
+
+
 # Rancher 
 
 curl -sSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
