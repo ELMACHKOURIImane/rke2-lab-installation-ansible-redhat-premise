@@ -1,0 +1,40 @@
+helm repo add descheduler https://kubernetes-sigs.github.io/descheduler/
+helm repo update
+
+----
+schedule: "*/1 * * * *"
+deschedulerPolicy:
+  apiVersion: "descheduler/v1alpha2"
+  kind: "DeschedulerPolicy"
+  profiles:
+    - name: default
+      pluginConfig:
+        # RemoveDuplicates config
+        - name: RemoveDuplicates
+          args: {}
+        # LowNodeUtilization config
+        - name: LowNodeUtilization
+          args:
+            thresholds:
+              cpu: 20
+              memory: 21
+              pods: 8
+            targetThresholds:
+              cpu: 50
+              memory: 25
+              pods: 11
+      plugins:
+        balance:
+          enabled:
+            - RemoveDuplicates
+            - LowNodeUtilization
+          disabled:
+            - RemovePodsViolatingTopologySpreadConstraint
+        deschedule:
+          enabled: []
+          disabled:
+            - "*"
+---
+helm install descheduler descheduler/descheduler -n kube-system -f values.yaml
+
+
