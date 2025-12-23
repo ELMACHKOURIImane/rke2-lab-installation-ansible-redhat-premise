@@ -21,6 +21,8 @@ helm upgrade -i cert-manager jetstack/cert-manager \
   --create-namespace \
   --set crds.enabled=true
 
+kubectl create ns cattle-system
+
 helm install rancher rancher-prime/rancher \
   --namespace cattle-system \
   --set hostname=rancher.cam.lab \
