@@ -4,7 +4,10 @@ kubectl taint nodes master1 node-role.kubernetes.io/master=true:NoSchedule
 
 
 # Rancher 
-
+# Helm
+export PATH=$PATH:/usr/local/bin
+echo 'export PATH=$PATH:/usr/local/bin' >> /root/.bashrc
+source /root/.bashrc
 curl -sSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
 helm repo add rancher-prime https://charts.rancher.com/server-charts/prime
