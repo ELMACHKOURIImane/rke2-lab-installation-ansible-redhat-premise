@@ -25,8 +25,9 @@ kubectl create ns cattle-system
 
 helm install rancher rancher-prime/rancher \
   --namespace cattle-system \
+  --version 2.12.5 \
   --set hostname=rancher.cam.lab \
-  --set bootstrapPassword=!%motpasse?? \
+  --set bootstrapPassword='!%motpasse??' \
   --set replicas=3
 
 
