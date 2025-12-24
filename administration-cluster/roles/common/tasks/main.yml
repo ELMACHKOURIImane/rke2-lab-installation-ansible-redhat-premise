@@ -14,8 +14,8 @@
     state: latest
 
 # Installer EPEL pour RHEL/CentOS 9
-- name: Installer epel-release via URL pour RHEL/CentOS 9
-  command: dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+#- name: Installer epel-release via URL pour RHEL/CentOS 9
+#  command: dnf install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
 
 - name: Installer les dépendances nécessaires
   yum:
@@ -41,7 +41,23 @@
     replace: '# \1'
   ignore_errors: true
 
-# === 4. Nettoyage ===
+# === 4. Désactiver SELinux définitivement ===
+- name: Désactiver SELinux dans /etc/selinux/config
+  replace:
+    path: /etc/selinux/config
+    regexp: '^SELINUX=.*'
+    replace: 'SELINUX=disabled'
+
+# === 5. Vérifier SElinux est désactivé
+- name: Vérifier l'état de SELinux
+  command: getenforce
+  register: selinux_status
+  ignore_errors: true
+
+- debug:
+    msg: "État SELinux actuel: {{ selinux_status.stdout }}"
+
+# === 6. Nettoyage ===
 - name: Nettoyer les paquets inutiles
   yum:
     autoremove: yes
