@@ -3,13 +3,21 @@
 kubectl taint nodes master1 node-role.kubernetes.io/master=true:NoSchedule
 
 
-# Rancher 
 # Helm
 export PATH=$PATH:/usr/local/bin
 echo 'export PATH=$PATH:/usr/local/bin' >> /root/.bashrc
 source /root/.bashrc
 curl -sSL https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
 
+# Traefik
+helm repo add traefik https://traefik.github.io/charts
+helm repo update
+
+helm upgrade --install traefik traefik/traefik \
+  --namespace traefik --create-namespace \
+  --set providers.kubernetesIngressNginx.enabled=true
+
+# Rancher 
 helm repo add rancher-prime https://charts.rancher.com/server-charts/prime
 helm repo update
 
