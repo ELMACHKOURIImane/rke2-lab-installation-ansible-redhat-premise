@@ -38,6 +38,9 @@ helm install rancher rancher-prime/rancher \
   --set bootstrapPassword='!%motpasse??' \
   --set replicas=3
 
+# Get password
+
+kubectl get secret --namespace cattle-system bootstrap-secret -o go-template='{{.data.bootstrapPassword|base64decode}}{{"\n"}}'
 
 #Longhorn
 
