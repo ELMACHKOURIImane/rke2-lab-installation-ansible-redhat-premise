@@ -1,0 +1,47 @@
+# Installation de MetalLB (LoadBalancer bare-metal)
+
+# Installer MetalLB
+
+kubectl apply -f https://raw.githubusercontent.com/metallb/metallb/v0.14.5/config/manifests/metallb-native.yaml
+
+
+# Vérifier
+kubectl get pods -n metallb-system
+
+
+# Définir la plage d’IP (adaptée à ton cluster)
+
+192.168.215.234 – 192.168.215.238
+
+
+# Plage MetalLB choisie :
+
+192.168.215.240 – 192.168.215.250
+
+# Créer metallb-config.yaml :
+
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: prod-pool
+  namespace: metallb-system
+spec:
+  addresses:
+    - 192.168.215.240-192.168.215.250
+---
+apiVersion: metallb.io/v1beta1
+kind: L2Advertisement
+metadata:
+  name: prod-l2
+  namespace: metallb-system
+spec: {}
+
+
+# Appliquer :
+
+kubectl apply -f metallb-config.yaml
+
+
+# Vérifier que Traefik reçoit une IP externe
+
+kubectl get svc -n treafik traefik
