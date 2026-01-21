@@ -4,9 +4,17 @@ metadata:
   name: argocd-cert
   namespace: argocd
 spec:
-  secretName: argocd-tls-imane
+  commonName: argocd.cam.lab
+  
+  # Durée de validité : 1 an (365 jours)
+  duration: 8760h 
+  
+  # Renouvellement automatique 30 jours avant l'expiration
+  renewBefore: 720h 
+  
+  secretName: argocd-tls
   issuerRef:
-    name: selfsigned-cluster-issuer
+    name: custom-ca-issuer
     kind: ClusterIssuer
   privateKey:
     rotationPolicy: Always
