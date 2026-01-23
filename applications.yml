@@ -18,6 +18,8 @@ helm upgrade --install traefik traefik/traefik \
   --namespace traefik --create-namespace \
   --set providers.kubernetesIngressNginx.enabled=true
 
+#Metallb
+
 # Rancher 
 helm repo add rancher-prime https://charts.rancher.com/server-charts/prime
 helm repo update
