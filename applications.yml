@@ -51,7 +51,7 @@ helm install longhorn longhorn/longhorn --namespace longhorn-system --create-nam
 
 #ArgoCD
 kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v3.1.11/manifests/ha/install.yaml
 
 # Get ArgoCD Password
 
