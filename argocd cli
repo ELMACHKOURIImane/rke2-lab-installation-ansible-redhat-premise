@@ -1,0 +1,32 @@
+#Download latest stable version¶
+#You can download the latest stable release by executing below steps:
+
+
+VERSION=$(curl -L -s https://raw.githubusercontent.com/argoproj/argo-cd/stable/VERSION)
+curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/download/v$VERSION/argocd-linux-amd64
+sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+rm argocd-linux-amd64
+
+Step 1: Login to Argo CD
+Make sure that you have updated the cluster details to the kubeconfig file and logged into Argo CD using Argo CD CLI, if not run the following command to log in to Argo CD.
+
+argocd login <url>:<port> --username <username> --password <password>
+
+ex: argocd login argocd.cam.lab:443 --username admin --password P@ssw0rd
+
+Step 2: Get the Context of the Cluster
+Once you have logged in to Argo CD, you need to find the context of the cluster you need to add to Argo CD.
+
+Run the following command to get the context from the kubeconfig file
+
+kubectl config get-contexts -o name
+You will get the list of cluster contexts that are configured in the kubeconfig file.
+
+Step 3: Add the Cluster
+To add the cluster to Argo CD, use the context of the running cluster you got from the previous step on the below command
+
+argocd cluster add <context-name>
+
+Step 4: verification
+
+argocd cluster list
