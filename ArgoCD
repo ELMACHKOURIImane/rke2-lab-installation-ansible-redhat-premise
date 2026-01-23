@@ -70,3 +70,6 @@ metadata:
 data:
     server.insecure: "true"
 
+
+# Apres tous ca il faut faire delete au pods d argocd server
+
