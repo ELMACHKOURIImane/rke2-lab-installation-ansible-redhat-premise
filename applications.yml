@@ -1,7 +1,8 @@
 # Taint masters 
 
 kubectl taint nodes master1 node-role.kubernetes.io/master=true:NoSchedule
-
+ # intallation git 
+ dnf install git
 
 # Helm
 export PATH=$PATH:/usr/local/bin
