@@ -69,6 +69,7 @@ metadata:
   namespace: argocd
 data:
     server.insecure: "true"
+    redis.server: argocd-redis-ha-haproxy:6379
 
 
 # Apres tous ca il faut faire delete au pods d argocd server
