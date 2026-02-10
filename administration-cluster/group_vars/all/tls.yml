@@ -1,5 +1,5 @@
 tls_sans:
-  - "gcam-prod-master1.cam.lab"
-  - "gcam-prod-master2.cam.lab"
-  - "gcam-prod-master3.cam.lab"
+  - "gcam-admin-master1.cam.lab"
+  - "gcam-admin-master2.cam.lab"
+  - "gcam-admin-master3.cam.lab"
 

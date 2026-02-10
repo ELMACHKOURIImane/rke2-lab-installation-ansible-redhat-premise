@@ -7,7 +7,18 @@
     enabled: false
   ignore_errors: true
 
-# === 2. Mise à jour du système ===
+# === 2. Configurer le proxy dans Red Hat ===
+
+- name: Configurer le proxy pour DNF (Red Hat)
+  lineinfile:
+    path: /etc/dnf/dnf.conf
+    line: "proxy={{ proxy_url }}"
+    state: present
+
+- name: Nettoyer le cache DNF
+  command: dnf clean all
+
+# === 3. Mise à jour du système ===
 - name: Mettre à jour tous les paquets
   yum:
     name: "*"

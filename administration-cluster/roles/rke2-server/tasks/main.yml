@@ -3,26 +3,36 @@
   file:
     path: /etc/rancher/rke2
     state: directory
-    
+
 - name: Générer le fichier config
   template:
     src: config.yaml.j2
     dest: /etc/rancher/rke2/config.yaml
-    
+
+- name: Configurer les variables d'environnement (Proxy)
+  template:
+    src: rke2-proxy.j2
+    dest: /etc/default/rke2-server
+    mode: '0644'
+
 - name: Installer RKE2 server
   shell: |
     curl -sfL https://get.rke2.io | \
     INSTALL_RKE2_TYPE=server \
     INSTALL_RKE2_VERSION=v1.33.6+rke2r1 \
     sh -
+  environment:
+    http_proxy: "{{ proxy_url }}"
+    https_proxy: "{{ proxy_url }}"
+    no_proxy: "{{ no_proxy_list }}"
 
 - name: Démarrer le service RKE2
   systemd:
     name: rke2-server
     state: started
     enabled: true
-    
-- name: Ajouter kubectl
+
+- name: Ajouter kubectl au PATH et configurer kubeconfig
   shell: |
     ln -sf $(find /var/lib/rancher/rke2/data/ -name kubectl | head -n 1) /usr/bin/kubectl
     mkdir -p ~/.kube
