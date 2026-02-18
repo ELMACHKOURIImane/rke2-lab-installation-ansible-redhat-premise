@@ -22,9 +22,9 @@
     INSTALL_RKE2_VERSION=v1.33.6+rke2r1 \
     sh -
   environment:
-    http_proxy: "{{ proxy_url }}"
-    https_proxy: "{{ proxy_url }}"
-    no_proxy: "{{ no_proxy_list }}"
+    HTTP_PROXY: "{{ proxy_url }}"
+    HTTPS_PROXY: "{{ proxy_url }}"
+    NO_PROXY: "{{ no_proxy_list }}"
 
 - name: Démarrer le service RKE2
   systemd:
